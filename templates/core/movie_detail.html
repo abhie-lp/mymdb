@@ -11,9 +11,36 @@
 
 {% block sidebar %}
   <div>
-    This movie is rated:
+    <span class="font-weight-bold text-muted">This movie is rated:</span>
     <span class="badge badge-primary">
       {{ object.get_rating_display }}
-    </span>
+    </span><br><br>
+  </div>
+
+  <div>
+    <span class="font-weight-bold text-muted">Director: </span>
+    {% if object.director %}
+      <a href="{% url 'core:person' object.director.pk %}">{{ object.director }}</a> <br>
+    {% endif %}
+
+    <span class="font-weight-bold text-muted">Writers: </span>
+    <ul style="list-style: none; margin-left: -20px">
+      {% for writer in object.writers.all %}
+        <li><a href="{% url 'core:person' writer.pk %}">
+          {{ writer.first_name }} {{ writer.last_name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <span class="font-weight-bold text-muted">Cast: </span>
+    <ul style="list-style: none; margin-left: -20px;">
+      {% for actor in object.actors.all %}
+        <li>
+          <a href="{% url 'core:person' actor.pk %}">{{ actor.first_name }} {{ actor.last_name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <span class="font-weight-bold text-muted">Runtime: </span> {{ object.runtime }}
   </div>
 {% endblock sidebar %}

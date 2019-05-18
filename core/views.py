@@ -8,7 +8,7 @@ class MovieListView(generic.ListView):
 
 
 class MovieDetailView(generic.DetailView):
-    model = models.Movie
+    queryset = models.Movie.objects.all_with_related_persons()
 
 
 class PersonDetailView(generic.DetailView):
