@@ -9,3 +9,7 @@ class MovieListView(generic.ListView):
 
 class MovieDetailView(generic.DetailView):
     model = models.Movie
+
+
+class PersonDetailView(generic.DetailView):
+    queryset = models.Person.objects.all_with_prefetch_movies()
