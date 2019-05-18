@@ -8,3 +8,17 @@ class MovieAdmin(admin.ModelAdmin):
     list_display_links = "title",
     list_filter = "year", "runtime",
     search_fields = "title", "year",
+
+
+@admin.register(models.Person)
+class PersonAdmin(admin.ModelAdmin):
+    list_display = "id", "first_name", "last_name", "born", "died",
+    list_display_links = "first_name", "last_name",
+    search_fields = "first_name", "last_name",
+
+
+@admin.register(models.Role)
+class RoleAdmin(admin.ModelAdmin):
+    list_display = "id", "person", "movie", "name",
+    list_display_links = "person", "movie", "name",
+    search_fields = "name",
