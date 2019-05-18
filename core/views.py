@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from . import models
+from django.views import generic
 
-# Create your views here.
+
+class MovieListView(generic.ListView):
+    model = models.Movie
