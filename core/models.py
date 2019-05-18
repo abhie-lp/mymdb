@@ -1,11 +1,24 @@
 from django.db import models
 
 
+class PersonManager(models.Manager):
+
+    def all_with_prefetch_movies(self):
+        qs = self.get_queryset()
+        return qs.prefetch_related(
+            "directed",
+            "writing_credits",
+            "role_set__movie",
+        )
+
+
 class Person(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     born = models.DateField(blank=True, null=True)
     died = models.DateField(blank=True, null=True)
+
+    objects = PersonManager()
 
     class Meta:
         ordering = "first_name", "last_name",
