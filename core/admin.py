@@ -22,3 +22,9 @@ class RoleAdmin(admin.ModelAdmin):
     list_display = "id", "person", "movie", "name",
     list_display_links = "person", "movie", "name",
     search_fields = "name",
+
+
+@admin.register(models.Vote)
+class VoteAdmin(admin.ModelAdmin):
+    list_display = "id", "movie", "user", "value",
+    list_display_links = "movie",

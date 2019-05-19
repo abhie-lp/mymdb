@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import  settings
 
 
 class PersonManager(models.Manager):
@@ -96,3 +97,18 @@ class Role(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Vote(models.Model):
+    UP = 1
+    DOWN = -1
+    VALUE_CHOICES = (
+        (UP, "😄"),
+        (DOWN, "☹"),
+    )
+    value = models.SmallIntegerField(choices=VALUE_CHOICES)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = "user", "movie",
