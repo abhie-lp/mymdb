@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}{{ object.title }} - {{ block.super }}{% endblock title %}
 
@@ -42,5 +43,28 @@
     </ul>
 
     <span class="font-weight-bold text-muted">Runtime: </span> {{ object.runtime }}
+  </div>
+
+  <div>
+  <style>
+    label[for="id_value_0"] {
+      display: none;
+    }
+
+    form {
+      margin-left: 20px;
+    }
+  </style>
+  <br>
+    <p class="font-weight-bold text-muted mb-2">Vote:</p>
+    {% if vote_form %}
+      <form method="post" action="{{ vote_form_url }}">
+        {% csrf_token %}
+        {{ vote_form|crispy }}
+        <button class="btn btn-primary" type="submit">Vote</button>
+      </form>
+    {% else %}
+      <p><a href="{% url 'user:login' %}">Login</a> to vote for this</p>
+    {% endif %}
   </div>
 {% endblock sidebar %}
