@@ -28,3 +28,9 @@ class RoleAdmin(admin.ModelAdmin):
 class VoteAdmin(admin.ModelAdmin):
     list_display = "id", "movie", "user", "value",
     list_display_links = "movie",
+
+
+@admin.register(models.MovieImage)
+class MovieImageAdmin(admin.ModelAdmin):
+    list_display = "movie", "user",
+    search_fields = "movie",
