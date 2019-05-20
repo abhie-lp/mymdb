@@ -118,3 +118,6 @@ LOGOUT_URL = "user:logout"
 
 LOGIN_REDIRECT_URL = "core:list"
 LOGOUT_REDIRECT_URL = "user:login"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "../media")
