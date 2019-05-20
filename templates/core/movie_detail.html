@@ -4,10 +4,20 @@
 {% block title %}{{ object.title }} - {{ block.super }}{% endblock title %}
 
 {% block main %}
-  <h1>{{ object.title }} - {{ object.year }}</h1>
-  <p class="lead">
-    {{ object.plot }}
-  </p>
+  <div class="col">
+    <h1>{{ object.title }} - {{ object.year }}</h1>
+    <p class="lead">
+      {{ object.plot }}
+    </p>
+  </div>
+
+  <ul class="movie-image list-inline">
+    {% for movie in object.movieimage_set.all %}
+      <li class="list-inline-item">
+        <img width="100%" src="{{ movie.image.url }}">
+      </li><br><br>
+    {% endfor %}
+  </ul>
 {% endblock main %}
 
 {% block sidebar %}
@@ -50,7 +60,7 @@
 
   <div>
   <style>
-    label[for="id_value_0"] {
+    label[for="id_value_0"], label[for="id_image"] {
       display: none;
     }
 
@@ -67,7 +77,22 @@
         <button class="btn btn-primary" type="submit">Vote</button>
       </form>
     {% else %}
-      <p><a href="{% url 'user:login' %}">Login</a> to vote for this</p>
+      <p><a href="{% url 'user:login' %}?next={{request.path}}">Login</a> to vote for this</p>
+    {% endif %}
+  </div><br>
+
+  <div>
+    <span class="font-weight-bold text-muted">Upload new image: </span>
+    {% if image_form %}
+      <form method="post"
+          enctype="multipart/form-data"
+          action="{% url 'core:image' object.id %}">
+        {% csrf_token %}
+        {{ image_form|crispy }}
+        <button class="btn btn-primary" type="submit">Upload</button>
+      </form>
+    {% else %}
+      <br><a href="{% url 'user:login' %}?next={{request.path}}">Login</a> to upload images.
     {% endif %}
   </div>
 {% endblock sidebar %}

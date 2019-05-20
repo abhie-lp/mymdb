@@ -17,6 +17,8 @@ class MovieDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         ctx = super(MovieDetailView, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated:
+            ctx["image_form"] = forms.MovieImageForm()
+
             vote = models.Vote.objects.get_vote_or_unsaved_blank_vote(
                 movie=self.object,
                 user=self.request.user,
@@ -83,3 +85,26 @@ class UpdateVote(LoginRequiredMixin, generic.UpdateView):
         movie_id = context["object"].id
         movie_detail_url = reverse("core:detail", args=[movie_id])
         return redirect(movie_detail_url)
+
+
+class MovieImageUploadView(LoginRequiredMixin, generic.CreateView):
+    form_class = forms.MovieImageForm
+
+    def get_initial(self):
+        initial = super(MovieImageUploadView, self).get_initial()
+        initial["user"] = self.request.user.id
+        initial["movie"] = self.kwargs.get("movie_id")
+
+        return initial
+
+    def render_to_response(self, context, **response_kwargs):
+        movie_id = self.kwargs.get("movie_id")
+        movie_detail_url = reverse('core:detail', args=[movie_id])
+
+        return movie_detail_url
+
+    def get_success_url(self):
+        movie_id = self.kwargs.get("movie_id")
+        movie_detail_url = reverse("core:detail", args=[movie_id])
+
+        return movie_detail_url
