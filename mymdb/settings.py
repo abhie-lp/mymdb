@@ -121,3 +121,13 @@ LOGOUT_REDIRECT_URL = "user:login"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "../media")
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATIO": "default-locmemcache",
+        "TIMEOUT": 10
+    }
+}
+
+CSRF_USE_SESSIONS = True
