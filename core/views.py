@@ -1,4 +1,4 @@
-from . import models, forms
+from . import models, forms, mixins
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views import generic
@@ -6,7 +6,7 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class MovieListView(generic.ListView):
+class MovieListView(mixins.CachePageVaryOnCookieMixin, generic.ListView):
     model = models.Movie
     paginate_by = 12
 
