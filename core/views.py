@@ -108,3 +108,8 @@ class MovieImageUploadView(LoginRequiredMixin, generic.CreateView):
         movie_detail_url = reverse("core:detail", args=[movie_id])
 
         return movie_detail_url
+
+
+class TopMovieView(generic.ListView):
+    template_name = "core/top_movies_list.html"
+    queryset = models.Movie.objects.top_movies(limit=10)
